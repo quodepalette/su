@@ -274,12 +274,25 @@ header.scrolled {
   opacity: 1;
 }
 
+@media (max-width: 900px) {
+  header.scrolled {
+    backdrop-filter: none; /* remove this — it traps fixed children */
+    -webkit-backdrop-filter: none;
+  }
+
+  /* compensate with a solid bg instead */
+  header.scrolled {
+    background: rgba(11, 31, 58, 0.98);
+  }
+}
+
 /*  Mobile Nav  */
 @media (max-width: 900px) {
   .nav-links {
     position: fixed;
     top: 0;
     right: 0;
+    left: auto;
     bottom: 0;
     width: min(290px, 82vw);
     background: var(--navy);
