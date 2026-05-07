@@ -1803,11 +1803,22 @@ section {
   }
 }
 
+/* AFTER */
 @media (max-width: 600px) {
   .footer-main {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
+
+  /* Brand/contact col spans full width */
+  .footer-main .footer-col:first-child {
+    grid-column: 1 / -1;
+  }
+
+  /* Contact col spans full width if it's last
+  .footer-main .footer-col:last-child {
+    grid-column: 1 / -1;
+  } */
 
   .facts-grid {
     grid-template-columns: repeat(2, 1fr);

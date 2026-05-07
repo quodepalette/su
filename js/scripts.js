@@ -95,3 +95,61 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
     b.style.color = '';
   }, 3000);
 });
+
+// Toast for prototype links
+const toast = document.createElement('div');
+toast.id = 'proto-toast';
+toast.textContent = 'Prototype — this link isn\'t available yet';
+toast.style.cssText = `
+  position: fixed;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--navy);
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.35);
+  font-family: var(--ff-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 9999;
+  white-space: nowrap;
+  pointer-events: none;
+`;
+document.body.appendChild(toast);
+
+let toastTimer;
+function showToast() {
+  clearTimeout(toastTimer);
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  toastTimer = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2500);
+}
+
+// Nav link hrefs to exclude from toast (real anchor sections)
+const NAV_HREFS = ['#about', '#admissions', '#news', '#events', '#contact', '#programs'];
+
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a');
+  if (!link) return;
+
+  const href = link.getAttribute('href');
+  if (!href) return;
+
+  // Skip real nav anchors and the back-to-top button area
+  if (NAV_HREFS.includes(href)) return;
+
+  // Skip external links (if any)
+  if (href.startsWith('http')) return;
+
+  // Everything else is a prototype link
+  e.preventDefault();
+  showToast();
+});
